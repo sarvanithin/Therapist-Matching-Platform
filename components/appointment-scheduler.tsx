@@ -75,10 +75,11 @@ export function AppointmentScheduler({ therapistId, therapistName }: Appointment
   }
 
   // Function to book an appointment
+  // Update bookAppointment function to use Google Calendar
   const bookAppointment = async () => {
-    if (!selectedSlot) return
+    if (!selectedSlot) return;
 
-    setIsBooking(true)
+    setIsBooking(true);
 
     try {
       const response = await fetch("/api/appointments", {
@@ -92,32 +93,32 @@ export function AppointmentScheduler({ therapistId, therapistName }: Appointment
           endTime: selectedSlot.end,
           notes,
         }),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to book appointment")
+        throw new Error("Failed to book appointment");
       }
 
-      const data = await response.json()
+      const data = await response.json();
 
       toast({
         title: "Appointment Scheduled",
         description: `Your appointment with ${therapistName} has been scheduled successfully.`,
-      })
+      });
 
       // Redirect to appointments page
-      router.push("/appointments")
+      router.push("/appointments");
     } catch (error) {
-      console.error("Error booking appointment:", error)
+      console.error("Error booking appointment:", error);
       toast({
         variant: "destructive",
         title: "Error",
         description: "Failed to book the appointment. Please try again.",
-      })
+      });
     } finally {
-      setIsBooking(false)
+      setIsBooking(false);
     }
-  }
+  };
 
   // Group available slots by date
   const slotsByDate = availableSlots.reduce(

@@ -1,67 +1,8 @@
 import { MongoClient } from "mongodb";
-import * as dotenv from "dotenv";
 
-// Load environment variables
-dotenv.config({ path: ".env.local" });
-
-// MongoDB connection
-const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/therapymatch";
+// MongoDB connection string - replace with your actual connection string
+const uri = "mongodb+srv://sarvanithin:Nithin%40123@therapistmatcher.mongodb.net/therapymatch?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
-
-// Therapist specializations
-const specializations = [
-  "Anxiety",
-  "Depression",
-  "Trauma",
-  "PTSD",
-  "Relationships",
-  "Family Therapy",
-  "Addiction",
-  "Grief and Loss",
-  "Stress Management",
-  "Self-Esteem",
-  "Eating Disorders",
-  "OCD",
-  "Bipolar Disorder",
-  "ADHD",
-  "Career Counseling",
-  "Life Transitions",
-  "Identity Issues",
-  "LGBTQ+ Issues",
-  "Chronic Illness",
-  "Anger Management",
-];
-
-// Therapeutic approaches
-const approaches = [
-  "Cognitive Behavioral Therapy (CBT)",
-  "Psychodynamic Therapy",
-  "Humanistic Therapy",
-  "Mindfulness-Based Therapy",
-  "Solution-Focused Therapy",
-  "EMDR",
-  "Family Systems Therapy",
-  "Narrative Therapy",
-  "Dialectical Behavior Therapy (DBT)",
-  "Acceptance and Commitment Therapy (ACT)",
-  "Gestalt Therapy",
-  "Interpersonal Therapy",
-  "Eclectic/Integrative Approach",
-];
-
-// Languages
-const languages = [
-  "English",
-  "Spanish",
-  "French",
-  "Mandarin",
-  "Cantonese",
-  "Vietnamese",
-  "Arabic",
-  "Russian",
-  "Portuguese",
-  "German",
-];
 
 // Define therapist data
 const therapists = [
@@ -203,76 +144,6 @@ const therapists = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  {
-    userId: "user-t3",
-    name: "Dr. Emily Rodriguez",
-    email: "emily.rodriguez@example.com",
-    profileImageUrl: "https://randomuser.me/api/portraits/women/68.jpg",
-    gender: "female",
-    age: 45,
-    culturalBackground: "Hispanic",
-    languages: ["English", "Spanish"],
-    credentials: {
-      degree: "Ph.D. in Clinical Psychology",
-      licenseType: "Licensed Clinical Psychologist",
-      licenseNumber: "PSY54321",
-      licenseState: "NY",
-      yearsOfExperience: 15,
-    },
-    specializations: ["Relationships", "Family Therapy", "Trauma", "Grief and Loss"],
-    approaches: ["Family Systems Therapy", "Emotionally Focused Therapy", "Narrative Therapy"],
-    biography:
-      "Dr. Rodriguez has 15 years of experience working with individuals, couples, and families. She specializes in relationship issues, family dynamics, and helping people heal from trauma and loss.",
-    practiceDescription:
-      "I believe in the power of relationships to heal and transform. My approach focuses on understanding the patterns in your relationships and helping you create healthier connections with yourself and others.",
-    sessionTypes: ["video", "in-person", "phone"],
-    sessionFees: {
-      initial: 190,
-      ongoing: 160,
-    },
-    acceptedInsurance: ["Aetna", "Cigna", "Oscar"],
-    location: {
-      address: "789 Healing Street",
-      city: "New York",
-      state: "NY",
-      zipCode: "10003",
-    },
-    availability: [
-      {
-        day: "Monday",
-        slots: ["09:00", "10:00", "15:00", "16:00", "17:00"],
-      },
-      {
-        day: "Wednesday",
-        slots: ["12:00", "13:00", "14:00", "15:00"],
-      },
-      {
-        day: "Thursday",
-        slots: ["09:00", "10:00", "15:00", "16:00", "17:00"],
-      },
-    ],
-    personalityTraits: ["Compassionate", "Direct", "Engaging", "Warm"],
-    reviews: [
-      {
-        rating: 5,
-        comment:
-          "Dr. Rodriguez helped save our marriage. Her insights into our communication patterns were invaluable.",
-        patientId: "patient-301",
-        createdAt: new Date("2023-03-22"),
-      },
-      {
-        rating: 5,
-        comment:
-          "After losing my father, Dr. Rodriguez helped me navigate the grief process with compassion and wisdom.",
-        patientId: "patient-302",
-        createdAt: new Date("2023-04-30"),
-      },
-    ],
-    averageRating: 5.0,
-    verificationStatus: "verified",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
   // Add your custom therapist profile
   {
     userId: "user-custom",
@@ -323,25 +194,10 @@ const therapists = [
       },
     ],
     personalityTraits: ["Empathetic", "Patient", "Insightful", "Warm", "Analytical"],
-    reviews: [
-      {
-        rating: 5,
-        comment:
-          "Dr. Nithin has been incredibly helpful in my journey with anxiety. His approach is both professional and compassionate.",
-        patientId: "patient-101",
-        createdAt: new Date("2023-05-15"),
-      },
-      {
-        rating: 5,
-        comment:
-          "I've seen several therapists over the years, and Dr. Nithin is by far the best. He really listens and provides practical strategies.",
-        patientId: "patient-102",
-        createdAt: new Date("2023-06-22"),
-      },
-    ],
+    reviews: [],
     averageRating: 5.0,
     verificationStatus: "verified",
-    googleCalendarId: "sarvanithin@gmail.com", // This is the actual Google Calendar ID
+    googleCalendarId: "sarvanithin@gmail.com",
     createdAt: new Date(),
     updatedAt: new Date(),
   },

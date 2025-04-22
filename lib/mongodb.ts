@@ -1,49 +1,39 @@
-import { MongoClient, ServerApiVersion } from "mongodb"
+import { MongoClient, ServerApiVersion } from "mongodb";
 
-// Check if MongoDB URI is defined
-const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/therapymatch"
+const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  throw new Error("❌ MONGODB_URI is not defined in your .env.local");
+}
+
 const options = {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
   },
+};
+
+// Define global type for reuse in dev
+declare global {
+  // eslint-disable-next-line no-var
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-let client: MongoClient
-let clientPromise: Promise<MongoClient>
+let client: MongoClient;
+let clientPromise: Promise<MongoClient>;
 
-// Function to create a client with error handling
-const createClient = () => {
-  try {
-    if (!uri || uri.trim() === "") {
-      throw new Error("MONGODB_URI is not defined")
-    }
-
-    const newClient = new MongoClient(uri, options)
-    return newClient.connect()
-  } catch (error) {
-    console.error("Failed to create MongoDB client:", error)
-    // Return a promise that rejects with the error
-    return Promise.reject(error)
+if (process.env.NODE_ENV === "development") {
+  // Use a global variable to prevent multiple clients during HMR
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri, options);
+    global._mongoClientPromise = client.connect();
   }
+  clientPromise = global._mongoClientPromise;
+} else {
+  // Always create a new client in production
+  client = new MongoClient(uri, options);
+  clientPromise = client.connect();
 }
 
-// In development mode, use a global variable so that the value
-// is preserved across module reloads caused by HMR (Hot Module Replacement).
-const globalWithMongo = global as typeof global & {
-  _mongoClientPromise?: Promise<MongoClient>
-}
-
-if (!globalWithMongo._mongoClientPromise) {
-  client = new MongoClient(uri, options)
-  globalWithMongo._mongoClientPromise = createClient().catch((err) => {
-    console.error("MongoDB connection error:", err)
-    // Return a mock client that will be handled by our error-tolerant code
-    return {} as MongoClient
-  })
-}
-clientPromise = globalWithMongo._mongoClientPromise
-
-// Export a module-scoped MongoClient promise
-export default clientPromise
+export default clientPromise;
